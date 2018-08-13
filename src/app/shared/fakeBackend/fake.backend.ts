@@ -13,14 +13,10 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
     if (request.url.endsWith('/login') && request.method === 'POST') {
         if (request.body.login === 'test@test.pl' && request.body.password === 'Password1') {
           return of(new HttpResponse({status: 200, body: {'message': 'login successful', 'access_token': 'bearer 0010011'}}));
-        }
-        else {
+        } else {
           return throwError({status: 401, error: { message: 'invalid email or password' } });
         }
-
     }
-
     return next.handle(request);
   }
-
 }
