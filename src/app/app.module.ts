@@ -4,7 +4,9 @@ import { PagesModule } from './pages/pages.module';
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
 import { RouterModule, PreloadAllModules } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {CanActivateViaOAuthGuard} from './oAuth.canActivateGuard';
+import {FakeBackendInterceptor} from './shared/fakeBackend/fake.backend';
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,7 +17,13 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FakeBackendInterceptor,
+      multi: true
+    },
+    CanActivateViaOAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

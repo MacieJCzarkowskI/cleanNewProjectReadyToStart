@@ -1,1 +1,12 @@
-
+<div class="login-component">
+  <div class="login-page">
+    <div class="form">
+      <form class="login-form">
+        <p *ngIf="ifError" class="message">{{errorMessage}}</p>
+        <input type="text" placeholder="{{loginPlaceholder}}" [(ngModel)]="this.loginText" [ngModelOptions]="{standalone: true}"/>
+        <input type="password"  placeholder="{{passwdPlaceholder}}"  [(ngModel)]="this.passwdText" [ngModelOptions]="{standalone: true}"/>
+        <div class="button"(click)="login()">login</div>
+      </form>
+    </div>
+  </div>
+</div>
