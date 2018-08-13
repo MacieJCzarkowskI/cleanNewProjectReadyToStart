@@ -3,8 +3,10 @@
     <div class="form">
       <form class="login-form">
         <p *ngIf="ifError" class="message">{{errorMessage}}</p>
-        <input type="text" placeholder="{{loginPlaceholder}}" [(ngModel)]="this.loginText" [ngModelOptions]="{standalone: true}"/>
-        <input type="password"  placeholder="{{passwdPlaceholder}}"  [(ngModel)]="this.passwdText" [ngModelOptions]="{standalone: true}"/>
+        <p *ngIf="loginErrorPattern" class="err_message">Error Login pattern</p>
+        <input type="text" placeholder="{{loginPlaceholder}}" [ngClass]="{'input-error': loginErrorPattern}" [(ngModel)]="this.loginText" [ngModelOptions]="{standalone: true}"/>
+        <p *ngIf="passwordErrorPattern" class="err_message">Error Password pattern</p>
+        <input type="password"  placeholder="{{passwdPlaceholder}}"  [ngClass]="{'input-error': passwordErrorPattern}" [(ngModel)]="this.passwdText" [ngModelOptions]="{standalone: true}"/>
         <div class="button"(click)="login()">login</div>
       </form>
     </div>
