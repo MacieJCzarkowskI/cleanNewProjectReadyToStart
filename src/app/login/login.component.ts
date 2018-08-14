@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../shared/services/authentification.service';
 import {Router} from '@angular/router';
 @Component({
@@ -16,17 +16,27 @@ export class LoginComponent implements OnInit {
   public isWrongPasswordPatten = true;
   public loginErrorPattern = false;
   public passwordErrorPattern = false;
-
-  public wrongLogin = false;
   public loginPlaceholder = 'login@example.com';
   public passwdPlaceholder = '●●●●●';
-
   constructor(public router: Router,
               private authenticationService: AuthenticationService) {
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
   login() {
+    this.checkPatterns();
+    if (!this.loginErrorPattern && !this.passwordErrorPattern) {
+      this.authenticationService.loginToProject(this.loginText, this.passwdText).then((success: any) => {
+        localStorage.setItem('token', success.access_token);
+        this.ifError = false;
+        this.router.navigateByUrl('/dashboard');
+        alert(success.message);
+      }, error => {
+        this.errorMessage = error.error.message;
+        this.ifError = true;
+      });
+    }
+  }
+  checkPatterns() {
     const emailPattern = new RegExp(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/);
     this.isWrongLoginPattern = emailPattern.test(this.loginText);
     const passwordPattern = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/);
@@ -50,16 +60,5 @@ export class LoginComponent implements OnInit {
       this.loginErrorPattern = false;
       this.passwordErrorPattern = false;
     }
-    this.authenticationService.loginToProject(this.loginText, this.passwdText).then( (success: any) => {
-      localStorage.setItem('token', success.access_token)
-      this.ifError = false;
-      this.router.navigateByUrl('/dashboard');
-      alert(success.message);
-    }, error => {
-      this.errorMessage = error.error.message;
-      this.ifError = true;
-    });
   }
-
-
 }
