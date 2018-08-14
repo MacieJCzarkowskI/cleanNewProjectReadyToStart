@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   public emailPattern = new RegExp(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/);
   public passwordPattern = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/);
   constructor(public router: Router,
-              private authenticationService: AuthenticationService) {
+              public authenticationService: AuthenticationService) {
   }
   ngOnInit() {}
   login() {
