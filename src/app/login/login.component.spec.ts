@@ -120,19 +120,4 @@ describe('LoginComponent', () => {
     }));
     expect(isPasswordOK).toBe(true);
   });
-
-  it('check if server is working', () => {
-    // spyOn(service, '')
-    // // if(component.authenticationService
-    // // const acceptedData = {
-    // //     'login': 'test@test.pl',
-    // //     'password': 'Password1',
-    // //   };
-    // // component.authenticationService.loginToProject(acceptedData.login, acceptedData.password).then((value) => {
-    // //   console.log(value);
-    // // }, (sss) => {
-    // //   console.log(sss);
-    // // })
-    expect(true).toBe(true);
-  });
 });
