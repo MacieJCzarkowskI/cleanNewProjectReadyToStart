@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   public passwordErrorPattern = false;
   public loginPlaceholder = 'login@example.com';
   public passwdPlaceholder = '●●●●●';
+  public emailPattern = new RegExp(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/);
+  public passwordPattern = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/);
   constructor(public router: Router,
               private authenticationService: AuthenticationService) {
   }
@@ -37,10 +39,8 @@ export class LoginComponent implements OnInit {
     }
   }
   checkPatterns() {
-    const emailPattern = new RegExp(/^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/);
-    this.isWrongLoginPattern = emailPattern.test(this.loginText);
-    const passwordPattern = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$/);
-    this.isWrongPasswordPatten = passwordPattern.test(this.passwdText);
+    this.isWrongLoginPattern = this.emailPattern.test(this.loginText);
+    this.isWrongPasswordPatten = this.passwordPattern.test(this.passwdText);
     if (!this.isWrongLoginPattern && !this.isWrongLoginPattern) {
       this.loginErrorPattern = true;
       this.passwordErrorPattern = true;
